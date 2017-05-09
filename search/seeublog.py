@@ -3,6 +3,7 @@
 def parse(soup, res):
     news = soup.find_all('div', class_='node-blogs')
 
+    i = 1
     items = []
     for item in news:
         elem = {}
@@ -21,11 +22,14 @@ def parse(soup, res):
                     if v.string != None:
                         desc += v.string
         
-        elem['title'] = item.div.h2.a.string
+        elem['title'] = item.div.h2.a.string.strip()
         elem['desc'] = desc
         elem['link'] = res['host'] + '/us/' + item.div.h2.a.get('href')
         elem['date'] = date[pos:]
 
         items.append(elem)
+
+        print (str(i)+'. ').ljust(4) + elem['title']
+        i += 1
 
     return items

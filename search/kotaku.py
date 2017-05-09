@@ -5,32 +5,65 @@ def parse(soup, res):
 
     items = []
     for item in news:
-        elem = {}
-        if not item.article.header:
-            pass
-        else:
-            title = ''
-            for val in list(item.article.header.h1.a.contents):
-                title += val.string
+        if item.get('class') != None:
+            # print item['class']
+            # classes = item['class'].split(' ')
+            classes = item['class']
+            # print classes
+            for c in classes:
+                if c == 'post-wrapper':
+                # if c == 'first-text':
+                    elem = {}
 
-            desc = ''
-            for val in list(item.article.div.find_next_sibling('div').div.p.contents):
-                if hasattr(val, 'get'):
-                    if val.get('class') is not None:
-                        if 'read-more' in val.get('class'):
-                            date = val.span.span.a.span.string
-                            # pass
+                    if not item.article.header:
+                        pass
                     else:
-                        for v in list(val.contents):
-                            desc += v.string
-                else:
-                    desc += val.string
+                        title = ''
+                        desc = ''
+                        link = ''
+                        date = ''
 
-            elem['title'] = title
-            elem['desc'] = desc
-            elem['link'] = item.article.header.h1.a.get('href')
-            elem['date'] = date            
+                        # print item.article.header.h1.a.contents
+                        for val in list(item.article.header.h1.a.contents):
+                            try:
+                                title += val.string
+                            except TypeError:
+                                pass
 
-            items.append(elem)
+                        link = item.article.header.h1.a.get('href')
+                        summary = item.article.div.findNextSibling('div')
+                        # summary = item.find_all('div', class_='entry-summary')
 
+                        # if 'marquee-asset' in summary.get('class'):
+                            # summary = summary.findNextSibling('div')
+                            # print 'marquee-asset'
+                            # summary = item.find_all('div', class_='entry-summary')
+                        
+                        date = item.article.header.div.div.time.a.string    
+                        
+                        if summary:
+                            # print summary.div.p
+                            for val in list(summary.p.contents):
+                                if hasattr(val, 'get'):
+                                    if val.get('class') is not None:
+                                        if 'read-more' in val.get('class'):
+                                            # date = val.span.span.a.span.string
+                                            pass
+                                    else:
+                                        for v in list(val.contents):
+                                            if v.string is not None:
+                                            # print type(v)
+                                                desc += v.string
+                                            # print v.string
+                                else:
+                                    desc += val.string
+
+                            elem['title'] = title
+                            elem['desc'] = desc
+                            elem['link'] = link
+                            elem['date'] = date
+
+                        items.append(elem)
+
+                        print elem['title']
     return items

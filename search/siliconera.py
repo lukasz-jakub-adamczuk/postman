@@ -3,6 +3,7 @@
 def parse(soup, res):
     news = soup.find_all('div', class_='post')
 
+    i = 1
     items = []
     for item in news:
         elem = {}
@@ -16,5 +17,8 @@ def parse(soup, res):
         elem['date'] = date[pos:]
 
         items.append(elem)
+
+        print (str(i)+'. ').ljust(4) + elem['title']
+        i += 1
 
     return items

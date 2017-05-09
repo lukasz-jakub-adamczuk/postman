@@ -27,6 +27,8 @@ def parse(soup, res):
                     elem['link'] = res['host'] + res['url'].replace('blog', '') + item.div.h2.a.get('href')
                     elem['date'] = date[pos:]
 
+                    print elem['title']
+
                     items.append(elem)
 
     return items

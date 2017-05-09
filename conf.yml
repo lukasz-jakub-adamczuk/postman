@@ -58,6 +58,36 @@ reddit:
   name: reddit.com
   host: http://www.reddit.com
   url: /r/SquareEnix
+redditff:
+  func: reddit
+  name: reddit.com
+  host: http://www.reddit.com
+  url: /r/FinalFantasy
+redditdq:
+  func: reddit
+  name: reddit.com
+  host: http://www.reddit.com
+  url: /r/DragonQuest
+reddittr:
+  func: reddit
+  name: reddit.com
+  host: http://www.reddit.com
+  url: /r/TombRaider
+redditde:
+  func: reddit
+  name: reddit.com
+  host: http://www.reddit.com
+  url: /r/DeusEx
+redditkh:
+  func: reddit
+  name: reddit.com
+  host: http://www.reddit.com
+  url: /r/KingdomHearts
+reddith:
+  func: reddit
+  name: reddit.com
+  host: http://www.reddit.com
+  url: /r/Hitman
 dualshockers:
   func: dualshockers
   name: dualshockers.com

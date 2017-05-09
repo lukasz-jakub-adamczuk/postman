@@ -16,6 +16,6 @@ do
 	then
 		python /home/ash/domains/$2/releases/workspace/postman/main.py --page=$LINE
 	else
-		python /Users/ash/Sites/postman/main.py --page=$LINE
+		python /home/ash/Sites/postman/main.py --page=$LINE
 	fi
 done

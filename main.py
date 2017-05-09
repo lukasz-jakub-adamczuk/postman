@@ -8,33 +8,37 @@ import requests
 
 import yaml
 import json
-from BeautifulSoup import BeautifulSoup
-# from bs4 import BeautifulSoup
+# from BeautifulSoup import BeautifulSoup
+from bs4 import BeautifulSoup
 
 import HTMLParser
 
 # import searchold
-from searchold import n4g
-from searchold import kotaku
-from searchold import squareportal
-from searchold import hardcoregamer
-from searchold import vgleaks
-from searchold import siliconera
-from searchold import seeublog
-from searchold import seorigin
-from searchold import gematsu
-from searchold import novacrystallis
-from searchold import reddit
-from searchold import dualshockers
+# from searchold import n4g
+# from searchold import kotaku
+# from searchold import squareportal
+# from searchold import hardcoregamer
+# from searchold import vgleaks
+# from searchold import siliconera
+# from searchold import seeublog
+# from searchold import seorigin
+# from searchold import gematsu
+# from searchold import novacrystallis
+# from searchold import reddit
+# from searchold import dualshockers
 
-# from search import n4g
-# from search import kotaku
-# from search import squareportal
-# from search import hardcoregamer
-# from search import vgleaks
-# from search import siliconera
-# from search import seeublog
+from search import n4g
+from search import kotaku
+from search import squareportal
+from search import hardcoregamer
+from search import vgleaks
+from search import siliconera
+from search import seeublog
 # from search import seorigin
+from search import gematsu
+from search import novacrystallis
+from search import reddit
+from search import dualshockers
 
 # functions
 def parseArgs(args):
@@ -61,11 +65,13 @@ def cut_source_code(content, name):
     if name == 'kotaku':
         return slice_source(content, '<div class="post-list', '<div class="row load-more">')
     if name == 'n4g':
-        return slice_source(content, '<div class="storylist-update">', '<!--%: Ads')
+        # return slice_source(content, '<div class="storylist-update">', '<!--%: Ads')
+        return content
     if name == 'siliconera':
         return slice_source(content, '<div class="leftcontainer">', '<div class="rightcontainer">')
     if name == 'vgleaks':
-        return slice_source(content, '<div id="blog-item-holder"', '<div class="gdl-pagination">')
+        # return slice_source(content, '<div id="blog-item-holder"', '<div class="gdl-pagination">')
+        return content
     if name == 'squareportal':
         return slice_source(content, '<div id="main-content">', '<div class="sidebar sidebar-category-summaries">')
     if name == 'hardcoregamer':
@@ -74,8 +80,10 @@ def cut_source_code(content, name):
         return slice_source(content, '<div id="content">', '<div id="sidebar">')
     if name == 'novacrystallis':
         return slice_source(content, '<div id="index_section_2_left_box">', '<div id="index_section_2_right">')
-    if name == 'reddit':
+    if name[0:6] == 'reddit':
         return slice_source(content, '<div id="siteTable"', '<div class="footer-parent">')
+    # if name == 'seorigin':
+    #     return slice_source(content, '<div class="main-featured"', '<div class="main wrap cf">')
     return content
 
 
@@ -103,15 +111,21 @@ dispatcher = {
     'n4g': n4g.parse,
     'kotaku': kotaku.parse,
     'squareportal': squareportal.parse,
-    'hardcoregamer': hardcoregamer.parse,
+    # 'hardcoregamer': hardcoregamer.parse,
     'vgleaks': vgleaks.parse,
     'siliconera': siliconera.parse,
     'seeublog': seeublog.parse,
     'senablog': seeublog.parse,
-    'seorigin': seorigin.parse,
+    # 'seorigin': seorigin.parse,
     'gematsu': gematsu.parse,
     'novacrystallis': novacrystallis.parse,
     'reddit': reddit.parse,
+    'redditff': reddit.parse,
+    'redditdq': reddit.parse,
+    'reddittr': reddit.parse,
+    'redditde': reddit.parse,
+    'redditkh': reddit.parse,
+    'reddith': reddit.parse,
     'dualshockers': dualshockers.parse
 }
 
@@ -131,41 +145,22 @@ if page in conf:
     header = 'Searching news for ' + url
     print header
     print ''.ljust(len(header), '-')
-    # print '  Title: ' + soup.title.string.strip()
-    # try:
-    #     response = urllib2.urlopen(url)
-    # except urllib2.HTTPError:
-    #     print '...urllib2.HTTPError...but get from file...'
-        
-    #     input = open('pages/' + res['name'], 'r')
-    #     response = input.read()
-    #     input.close()
 
-    # try:
-    #     soup = BeautifulSoup(response)
-    # except HTMLParser.HTMLParseError:        
-    #     input = open('pages/' + res['name'], 'r')
-    #     response = input.read()
-    #     input.close()
+    if page[0:6] == 'reddit':
+        time.sleep(10)
 
-    #     soup = BeautifulSoup(response)
-
-    # new way
     response = requests.get(url)
 
     # python 2.6 need partial response
-    source = cut_source_code(response.content, res['func'])
-    # print source[0:500]
+    # source = cut_source_code(response.content, res['func'])
 
-    # crazy hack for broken source on novacrystallis
-    source = source.replace('week\'s "feedback special"', '')
-    # print source[0:500]
-    
-    soup = BeautifulSoup(source)
-    # print soup
+    # # crazy hack for broken source on novacrystallis
+    # source = source.replace('week\'s "feedback special"', '')
+
+    # soup = BeautifulSoup(source)
     
     # python 2.7 has better parser and handle full response
-    # soup = BeautifulSoup(response.content)
+    soup = BeautifulSoup(response.content)
 
     filename = path + '/' + page + '.json'
     
