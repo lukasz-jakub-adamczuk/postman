@@ -1,28 +1,28 @@
 seeublog:
   func: seeublog
-  name: eu.square-enix.com
-  host: http://eu.square-enix.com
-  url: /en/blog
+  name: square-enix-games.com
+  host: https://square-enix-games.com
+  url: /en_GB/home2
 senablog:
   func: seeublog
-  name: na.square-enix.com
-  host: http://na.square-enix.com
-  url: /us/blog
+  name: square-enix-games.com
+  host: https://square-enix-games.com
+  url: /en_US/home2
 n4g:
   func: n4g
   name: n4g.com
   host: http://n4g.com
-  url: /channel/square-enix
+  url: /channel/square-enix?tab=latest&subTab=above0
 kotaku:
   func: kotaku
   name: kotaku.com
   host: http://kotaku.com
   url: /tag/square-enix
-squareportal:
-  func: squareportal
-  name: squareportal.net
-  host: http://squareportal.net
-  url: 
+# squareportal:
+#   func: squareportal
+#   name: squareportal.net
+#   host: http://squareportal.net
+#   url: 
 siliconera:
   func: siliconera
   name: siliconera.com
@@ -38,11 +38,11 @@ vgleaks:
   name: vgleaks.com
   host: http://www.vgleaks.com
   url: /tag/square-enix
-seorigin:
-  func: seorigin
-  name: enixorigin.com
-  host: http://www.enixorigin.com
-  url: 
+# seorigin:
+#   func: seorigin
+#   name: enixorigin.com
+#   host: http://www.enixorigin.com
+#   url: 
 gematsu:
   func: gematsu
   name: gematsu.com
@@ -53,6 +53,11 @@ novacrystallis:
   name: novacrystallis.com
   host: http://www.novacrystallis.com
   url:
+dualshockers:
+  func: dualshockers
+  name: dualshockers.com
+  host: http://www.dualshockers.com
+  url: /?s=square+enix
 reddit:
   func: reddit
   name: reddit.com
@@ -88,8 +93,3 @@ reddith:
   name: reddit.com
   host: http://www.reddit.com
   url: /r/Hitman
-dualshockers:
-  func: dualshockers
-  name: dualshockers.com
-  host: http://www.dualshockers.com
-  url: 

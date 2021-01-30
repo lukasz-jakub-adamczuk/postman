@@ -1,4 +1,4 @@
-#!/bin/python
+#!/bin/python3
 
 import os, sys
 import time, datetime
@@ -11,7 +11,7 @@ import json
 # from BeautifulSoup import BeautifulSoup
 from bs4 import BeautifulSoup
 
-import HTMLParser
+from html.parser import HTMLParser
 
 # import searchold
 # from searchold import n4g
@@ -34,7 +34,7 @@ from search import hardcoregamer
 from search import vgleaks
 from search import siliconera
 from search import seeublog
-# from search import seorigin
+from search import seorigin
 from search import gematsu
 from search import novacrystallis
 from search import reddit
@@ -82,14 +82,14 @@ def cut_source_code(content, name):
         return slice_source(content, '<div id="index_section_2_left_box">', '<div id="index_section_2_right">')
     if name[0:6] == 'reddit':
         return slice_source(content, '<div id="siteTable"', '<div class="footer-parent">')
-    # if name == 'seorigin':
-    #     return slice_source(content, '<div class="main-featured"', '<div class="main wrap cf">')
+    if name == 'seorigin':
+        return slice_source(content, '<div class="main-featured"', '<div class="main wrap cf">')
     return content
 
 
 # main code
 if len(sys.argv) < 2:
-    print 'Not enough arguments'
+    print('Not enough arguments')
     sys.exit(1)
 else:
     options = parseArgs(sys.argv)
@@ -101,22 +101,22 @@ if 'page' in options:
     page = options['page']
 
 path = os.path.dirname(os.path.realpath(__file__))
-# print path
+# print(path)
 
 input = open(path + '/conf.yml', 'r')
-conf = yaml.load(input)
+conf = yaml.load(input, Loader=yaml.FullLoader)
 input.close()
 
 dispatcher = {
     'n4g': n4g.parse,
     'kotaku': kotaku.parse,
     'squareportal': squareportal.parse,
-    # 'hardcoregamer': hardcoregamer.parse,
+    'hardcoregamer': hardcoregamer.parse,
     'vgleaks': vgleaks.parse,
     'siliconera': siliconera.parse,
     'seeublog': seeublog.parse,
     'senablog': seeublog.parse,
-    # 'seorigin': seorigin.parse,
+    'seorigin': seorigin.parse,
     'gematsu': gematsu.parse,
     'novacrystallis': novacrystallis.parse,
     'reddit': reddit.parse,
@@ -143,8 +143,8 @@ if page in conf:
         url += res['url']
 
     header = 'Searching news for ' + url
-    print header
-    print ''.ljust(len(header), '-')
+    print(header)
+    print(''.ljust(len(header), '-'))
 
     if page[0:6] == 'reddit':
         time.sleep(10)
@@ -160,7 +160,7 @@ if page in conf:
     # soup = BeautifulSoup(source)
     
     # python 2.7 has better parser and handle full response
-    soup = BeautifulSoup(response.content)
+    soup = BeautifulSoup(response.content, features = 'lxml')
 
     filename = path + '/' + page + '.json'
     
@@ -168,24 +168,24 @@ if page in conf:
     items = dispatcher[res['func']](soup, res)
 
     footer = 'Found: ' + str(len(items)) + ' items'
-    print
-    print footer
-    # print ''.ljust(len(footer), '-')
-    print 
+    print('')
+    print(footer)
+    # print(''.ljust(len(footer), '-'))
+    print('')
 
     feed =  json.dumps(items)
 
     # except AttributeError as err:
-    #     print 'AttributeError ({0}): {1}'.format(err.errno, err.strerror)
+    #     print('AttributeError ({0}): {1}'.format(err.errno, err.strerror))
     #     feed = '[]'
     # except ValueError as err:
-    #     print 'ValuesError ({0}): {1}'.format(err.errno, err.strerror)
+    #     print('ValuesError ({0}): {1}'.format(err.errno, err.strerror))
     #     feed = '[]'
     
     # except Exception as inst:
-    #     print type(inst)     # the exception instance
-    #     print inst.args      # arguments stored in .args
-    #     print inst 
+    #     print(type(inst)     # the exception instance)
+    #     print(inst.args      # arguments stored in .args)
+    #     print(inst )
     #     feed = '[]'
 
     input = open(filename, 'w')

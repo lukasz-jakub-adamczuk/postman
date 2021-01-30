@@ -1,14 +1,14 @@
 #!/bin/python
 
 def parse(soup, res):
-    print soup
+    print(soup)
     # news = soup.findAll('div')
     news = soup.find_all('div', class_='thing')
 
     i = 1
     items = []
     for item in news:
-        # print item
+        # print(item)
         elem = {}
 
                 # title = ''
@@ -26,7 +26,7 @@ def parse(soup, res):
 
         items.append(elem)
 
-        print (str(i)+'. ').ljust(4) + elem['title']
+        print((str(i)+'. ').ljust(4) + elem['title'])
         i += 1
 
     return items

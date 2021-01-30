@@ -7,19 +7,20 @@ def parse(soup, res):
     i = 1
     items = []
     for item in news:
-        elem = {}
+        elem = {'title': '', 'link': '', 'desc': '', 'date': '', 'tags': [], 'img': ''}
 
-        elem['title'] = item.div.find_next_sibling('div').a.h2.string
-        elem['desc'] = '...'
-        elem['link'] = item.div.find_next_sibling('div').a['href']
-        elem['date'] = item.div.find_next_sibling('div').div.div.contents[0]
+        elem['title']   = item.div.find_next_sibling('div').a.h2.string
+        elem['link']    = item.div.findNextSibling('div').a.get('href')
+        elem['desc']    = '...'
+        elem['date']    = item.div.find_next_sibling('div').div.div.contents[0]
+        elem['img']     = item.div.a.div.get('style').replace(';background-image:url(', '').replace(');', '')
 
         if elem['link'][0] == '/':
             elem['link'] = res['host'] + elem['link']
         
         items.append(elem)
 
-        print (str(i)+'. ').ljust(4) + elem['title']
+        print((str(i)+'. ').ljust(4) + elem['title'])
         i += 1
         
     return items

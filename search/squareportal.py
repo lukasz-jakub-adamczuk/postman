@@ -15,6 +15,6 @@ def parse(soup, res):
 
         items.append(elem)
 
-        print elem['title']
+        print(elem['title'])
 
     return items
